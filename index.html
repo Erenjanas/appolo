@@ -35,10 +35,9 @@
         .vignette { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, transparent 0%, transparent 35%, rgba(0,0,0,0.75) 100%); pointer-events: none; z-index: 3; }
         .banner-content { position: relative; z-index: 5; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 20px; width: 100%; max-width: 500px; }
 
-        /* ====== AVATAR ====== */
+        /* ====== AVATAR (SADECE JPG) ====== */
         .avatar-wrapper { position: relative; margin-bottom: 24px; width: 130px; height: 130px; }
-        .avatar-video { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.08); box-shadow: 0 0 50px rgba(255,255,255,0.06), 0 0 100px rgba(255,255,255,0.03); display: block; animation: avatar-glow 4s ease-in-out infinite; }
-        .avatar-img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.08); box-shadow: 0 0 50px rgba(255,255,255,0.06), 0 0 100px rgba(255,255,255,0.03); display: none; animation: avatar-glow 4s ease-in-out infinite; }
+        .avatar-img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.08); box-shadow: 0 0 50px rgba(255,255,255,0.06), 0 0 100px rgba(255,255,255,0.03); display: block; animation: avatar-glow 4s ease-in-out infinite; }
         @keyframes avatar-glow { 0%, 100% { box-shadow: 0 0 50px rgba(255,255,255,0.06), 0 0 100px rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); } 50% { box-shadow: 0 0 70px rgba(255,255,255,0.12), 0 0 140px rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); } }
         .status-dot { position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; background: #3ba55d; border-radius: 50%; border: 3px solid #0a0a0a; z-index: 6; animation: status-blink 2.5s ease-in-out infinite; }
         @keyframes status-blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
@@ -117,7 +116,7 @@
         @media (max-width: 480px) {
             .username { font-size: 32px; letter-spacing: 6px; }
             .avatar-wrapper { width: 110px; height: 110px; }
-            .avatar-video, .avatar-img { width: 110px; height: 110px; }
+            .avatar-img { width: 110px; height: 110px; }
             .social-links { gap: 8px; }
             .social-btn { padding: 9px 14px; font-size: 11px; }
             .music-player { padding: 14px; }
@@ -150,9 +149,6 @@
 
         <div class="banner-content">
             <div class="avatar-wrapper">
-                <video class="avatar-video" id="avatarVideo" muted loop playsinline preload="auto">
-                    <source src="avatar.mp4" type="video/mp4">
-                </video>
                 <img src="avatar.jpg" alt="Avatar" class="avatar-img" id="avatarImg">
                 <div class="status-dot"></div>
             </div>
@@ -249,23 +245,15 @@
         const audio = document.getElementById('audioPlayer');
         const bannerVideo = document.getElementById('bannerVideo');
         const bannerImg = document.getElementById('bannerImg');
-        const avatarVideo = document.getElementById('avatarVideo');
-        const avatarImg = document.getElementById('avatarImg');
         const musicCover = document.getElementById('musicCover');
         const equalizer = document.getElementById('equalizer');
         const scrollIndicator = document.getElementById('scrollIndicator');
 
-        // Video fallback: hata olursa img goster
+        // Banner video hata olursa jpg goster
         if (bannerVideo) {
             bannerVideo.onerror = function() {
                 bannerVideo.style.display = 'none';
                 if (bannerImg) bannerImg.style.display = 'block';
-            };
-        }
-        if (avatarVideo) {
-            avatarVideo.onerror = function() {
-                avatarVideo.style.display = 'none';
-                if (avatarImg) avatarImg.style.display = 'block';
             };
         }
 
@@ -282,10 +270,6 @@
             if (bannerVideo) {
                 bannerVideo.muted = false;
                 bannerVideo.play().catch(e => console.log('Banner video blocked:', e));
-            }
-            if (avatarVideo) {
-                avatarVideo.muted = false;
-                avatarVideo.play().catch(e => console.log('Avatar video blocked:', e));
             }
         });
 
